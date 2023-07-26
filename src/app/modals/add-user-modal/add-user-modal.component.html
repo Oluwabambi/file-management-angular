@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h4 class="modal-title">Add User</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="bsModalRef.hide()"></button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="userForm" class="row" (ngSubmit)="addUser()">
+        <div class="mb-3 col-md-6">
+            <label class="form-label">First Name</label>
+            <input class="form-control" type="text" formControlName="firstName">
+            <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="text-danger-sm">
+                <div *ngIf="firstName?.errors?.['required']">
+                    First name is required.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 col-md-6">
+            <label class="form-label">Last Name</label>
+            <input class="form-control" type="text" formControlName="lastName">
+            <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="text-danger-sm">
+                <div *ngIf="lastName?.errors?.['required']">
+                    Last name is required.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 col-md-6">
+            <label class="form-label">Email</label>
+            <input class="form-control" type="email" formControlName="email">
+            <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger-sm">
+                <div *ngIf="email?.errors?.['required']">
+                    Email is required.
+                </div>
+                <div *ngIf="email?.errors?.['email']">
+                    Must be a valid email.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 col-md-6">
+            <label class="form-label">User Type</label>
+            <select class="form-select" formControlName="userType">
+                <option selected disabled>Choose...</option>
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+            </select>
+            <div *ngIf="userType?.invalid && (userType?.dirty || userType?.touched)" class="text-danger-sm">
+                <div *ngIf="userType?.errors?.['required']">
+                    User Type is required.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 col-md-6">
+            <label class="form-label">Password</label>
+            <input class="form-control" type="password" formControlName="password">
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger-sm">
+                <div *ngIf="password?.errors?.['required']">
+                    Password is required.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+            <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>

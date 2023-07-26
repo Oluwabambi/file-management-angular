@@ -1,0 +1,35 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="main px-lg-3 py-3 px-4">
+    <div class="main-head mt-3 mb-4">
+        <button class="main-btn" type="button" (click)="openModal()">Upload File</button>
+    </div>
+    <div class="main-table w-100 overflow-x-auto">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">S/N</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Uploaded By</th>
+                    <th scope="col">Date Uploaded</th>
+                    <th scope="col">File Size</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of files">
+                    <th scope="row">{{item.id}}</th>
+                    <td>{{item.description}}</td>
+                    <td>{{"OPE"}}</td>
+                    <td>{{item.date_uploaded}}</td>
+                    <td>{{item.file_size}}</td>
+                    <td>
+                        <span [ngClass]="{'is-pending': item.status.toLowerCase() === 'pending', 'is-processing': item.status.toLowerCase() === 'processing', 'is-processed': item.status.toLowerCase() === 'processed'}">
+                            {{item.status}}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

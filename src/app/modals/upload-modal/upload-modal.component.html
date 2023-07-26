@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h4 class="modal-title">Upload File</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="bsModalRef.hide()"></button>
+</div>
+<div class="modal-body">
+    <form class="row" [formGroup]="uploadForm" (ngSubmit)="fileUpload()">
+        <div class="mb-3 col-12">
+            <div class="file-group d-flex flex-column justify-content-between">
+                <div class="d-flex align-items-center add-file">
+                    <i class="bi bi-file-earmark-plus"></i>
+                    <span class="ms-2">Select a file</span>
+                    <input type="file" formControlName="file"/>
+                </div>
+            </div>
+            <div *ngIf="file?.invalid && (file?.dirty || file?.touched)" class="text-danger-sm">
+                <div *ngIf="file?.errors?.['required']">
+                    File is required.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 col-12">
+            <label class="form-label">Description</label>
+            <input class="form-control" type="text" formControlName="description">
+            <div *ngIf="description?.invalid && (description?.dirty || description?.touched)" class="text-danger-sm">
+                <div *ngIf="description?.errors?.['required']">
+                    Description is required.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+            <button type="submit" [disabled]="uploadForm.invalid" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>

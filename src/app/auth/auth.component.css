@@ -1,0 +1,30 @@
+.auth-bg {
+    width: 35%;
+    background-image: linear-gradient(225deg, #1b63ce 30%, black);
+}
+.auth-form {
+    width: 65%;
+}
+.auth-form-container {
+    max-width: 350px;
+}
+.auth-form h2 {
+    font-family: 'Poppins', sans-serif;
+    color: #656565;
+}
+label {
+    color: #656565;
+}
+.forgot-link, .login-link {
+    text-decoration: none;
+    font-size: 14px;
+}
+.text-danger-sm {
+    color: #cc3611;
+    font-size: 12px;
+}
+@media (max-width: 990px) {
+    .auth-form {
+        width: 100%;
+    }
+}

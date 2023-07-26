@@ -1,0 +1,37 @@
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    overflow-y: auto;
+    background-color: #0a2723 !important;
+}
+.sidebar-logo {
+    height: 80px;
+}
+.sidebar-logo h3 {
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* .sidebar-menu {
+} */
+.menu-item {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+}
+.menu-item:hover, .menu-item.active {
+    background-color: #ffffff;
+    color: #0d202d;
+}
+.sidebar-footer a {
+    text-decoration: none;
+    color: #c22727;
+    font-size: 14px;
+}
+.close-menu {
+    color: #ffffff;
+    cursor: pointer;
+}

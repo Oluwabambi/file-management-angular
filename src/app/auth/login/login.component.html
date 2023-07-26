@@ -1,0 +1,32 @@
+<div class="auth-container min-vh-100 d-flex">
+    <div class="auth-bg d-lg-block d-none"></div>
+    <div class="auth-form d-flex align-items-center justify-content-center">
+        <div class="auth-form-container p-2">
+            <h2 class="text-center mb-4">Login</h2>
+            <form [formGroup]="loginForm" class="row mb-4" (ngSubmit)="login()">
+                <div class="mb-3 col-12">
+                    <label class="form-label">Email</label>
+                    <input type="text" class="form-control" formControlName="email">
+                    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger-sm">
+                        <div *ngIf="email?.errors?.['required']">
+                            Email is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 col-12">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" formControlName="password">
+                    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger-sm">
+                        <div *ngIf="password?.errors?.['required']">
+                            Password is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary w-100">Login</button>
+                </div>
+            </form>
+            <a class="forgot-link" routerLink="/auth/forgot-password">Forgot password?</a>
+        </div>
+    </div>
+</div>

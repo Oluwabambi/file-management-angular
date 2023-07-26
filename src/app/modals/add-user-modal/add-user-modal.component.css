@@ -1,0 +1,11 @@
+.modal-title {
+    color: #404040;
+}
+label {
+    font-size: 14px;
+    color: #404040;
+}
+.text-danger-sm {
+    color: #cc3611;
+    font-size: 12px;
+}
