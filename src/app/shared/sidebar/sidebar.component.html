@@ -3,8 +3,8 @@
         <div class="menu">
             <div class="d-flex justify-content-between">
                 <div class="sidebar-logo">
-                    <img src="" alt="">
-                    <h3>CSS FEEDBACK</h3>
+                    <!-- <img src="" alt=""> -->
+                    <h3>CSS FEEDBACK PORTAL</h3>
                 </div>
                 <div class="d-lg-none d-flex align-items-center">
                     <span class="close-menu" data-bs-target="#feedbackSidebar" data-bs-dismiss="offcanvas" aria-label="Close">x</span>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="sidebar-footer mb-3">
-            <a routerLink="/auth/login" class="p-2">
+            <a routerLink="/auth/login" (click)="onLogout()" class="p-2">
                 <i class="bi bi-box-arrow-right me-3"></i>
                 <span>Logout</span>
             </a>

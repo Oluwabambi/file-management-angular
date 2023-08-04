@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FeedbackUploadComponent } from './dashboard/feedback-upload/feedback-upload.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
     // data: { title: 'Acc - Dashboard' },
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: '**',

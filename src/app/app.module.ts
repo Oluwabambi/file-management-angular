@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UploadModalComponent } from './modals/upload-modal/upload-modal.component';
 import { AddUserModalComponent } from './modals/add-user-modal/add-user-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal'
-import { HttpClientModule } from '@angular/common/http'
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
+import { ToastrModule } from 'ngx-toastr';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { RequestInterceptor } from './interceptors/request.interceptor';
+import { EditUserModalComponent } from './modals/edit-user-modal/edit-user-modal.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ConfirmStatusComponent } from './modals/confirm-status/confirm-status.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +24,8 @@ import { HttpClientModule } from '@angular/common/http'
     PageNotFoundComponent,
     UploadModalComponent,
     AddUserModalComponent,
+    EditUserModalComponent,
+    ConfirmStatusComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,9 +33,20 @@ import { HttpClientModule } from '@angular/common/http'
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    ModalModule.forRoot()
+    BrowserAnimationsModule,
+    ModalModule.forRoot(),
+    ToastrModule.forRoot(),
+    NgxDropzoneModule,
+    PaginationModule.forRoot(),
+    NgSelectModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

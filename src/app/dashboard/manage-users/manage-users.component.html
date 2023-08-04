@@ -1,10 +1,10 @@
 <app-header></app-header>
 <app-sidebar></app-sidebar>
-<div class="main px-lg-3 py-3 px-4">
+<div class="main px-lg-3 py-3 px-4 d-flex flex-column">
     <div class="main-head mt-3 mb-4">
         <button class="main-btn" type="button" (click)="openModal()">Add User</button>
     </div>
-    <div class="main-table w-100 overflow-x-auto">
+    <div class="main-table w-100 overflow-x-auto flex-grow-1">
         <table class="table table-striped">
             <thead >
                 <tr>
@@ -15,23 +15,49 @@
                     <th scope="col">Date Added</th>
                     <th scope="col">Last Login</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of users">
-                    <th scope="row">{{item.id}}</th>
+                <i *ngIf="isLoading" class="fa-solid fa-gear fa-spin spinner-size position-absolute start-50"></i>
+                <tr *ngFor="let item of users | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}; let i = index">
+                    <th scope="row">{{i + 1}}</th>
                     <td>{{item.firstName}}</td>
                     <td>{{item.lastName}}</td>
                     <td>{{item.email}}</td>
-                    <td>{{item.date_added}}</td>
+                    <td>{{item.dateAdded}}</td>
                     <td>{{item.lastLogin}}</td>
                     <td>
-                        <span [ngClass]="{'is-active': item.status === 'Active', 'is-inactive': item.status === 'Inactive'}">
-                            {{item.status}}
+                        <span [ngClass]="{'is-active': item.status, 'is-inactive': !item.status}">
+                            {{item.status ? "ACTIVE" : "INACTIVE"}}
                         </span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <!-- <button placement="auto" (click)="changeUserStatus(item)" class="btn btn-side" [ngClass]="{'btn-danger': item.status === 'active', 'btn-success': item.status === 'inactive'}" tooltip="Deactivate">
+                                {{item.status === 'active' ? 'Deactivate' : 'Activate'}}
+                                <div *ngIf="updateLoading && userToUpdate === item.id" class="spinner-border spinner-border-sm" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </button> -->
+                            <button placement="auto" (click)="showConfirmModal(item)" class="btn btn-side" [ngClass]="{'btn-danger': item.status, 'btn-success': !item.status}" tooltip="Deactivate">
+                                {{item.status ? 'Deactivate' : 'Activate'}}
+                                                            <!-- <div *ngIf="updateLoading && userToUpdate === item.id" class="spinner-border spinner-border-sm" role="status">
+                                                                <span class="visually-hidden">Loading...</span>
+                                                            </div> -->
+                            </button>
+                            <i (click)="showEditModal(item)" class="bi bi-pencil-square ms-2" tooltip="Edit" placement="auto"></i>
+                            <!-- <i class="bi bi-x-octagon ms-2"></i> -->
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div class="row">
+            <div class="col-6 ms-auto">
+                <pagination [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [totalItems]="users?.length" [(ngModel)]="currentPage" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"></pagination>
+            </div>
+        </div>
+        
     </div>
 </div>

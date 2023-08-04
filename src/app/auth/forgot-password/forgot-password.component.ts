@@ -10,6 +10,7 @@ import { FormControl, Validators } from '@angular/forms';
   ],
 })
 export class ForgotPasswordComponent implements OnInit {
+  isLoading: boolean = false;
   email = new FormControl('', [Validators.required, Validators.email])
   constructor() {}
 

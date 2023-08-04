@@ -1,6 +1,12 @@
 .auth-bg {
     width: 35%;
-    background-image: linear-gradient(225deg, #1b63ce 30%, black);
+    /* background-image: linear-gradient(225deg, #1b63ce 30%, black); */
+    background-color: #0a2723;
+}
+.auth-bg h1 {
+    color: #ffffff;
+    font-size: 50px;
+    text-align: center;
 }
 .auth-form {
     width: 65%;
@@ -22,6 +28,19 @@ label {
 .text-danger-sm {
     color: #cc3611;
     font-size: 12px;
+}
+.auth-btn {
+    background-color: #0c720c;
+    padding: 0.55rem 0.75rem;
+    color: #ffffff;
+    border-radius: 5px;
+    border: none;
+}
+.pass-icon {
+    top: 52%;
+    right: 8%;
+    cursor: pointer;
+    font-size: 19px;
 }
 @media (max-width: 990px) {
     .auth-form {

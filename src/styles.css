@@ -1,7 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
 * {
     font-family: 'Libre Franklin', sans-serif;
 }
 body {
     background-color: #fafbfe;
+}
+.toastr-box {
+    background-size: 20px !important;
+    width: 270px !important;
+}
+.pagination {
+    justify-content: flex-end;
+}
+.page-link {
+    font-size: 13px;
+}
+@media (max-width:576px) {
+    .modal-dialog {
+        margin-top: 8rem;
+    }
 }

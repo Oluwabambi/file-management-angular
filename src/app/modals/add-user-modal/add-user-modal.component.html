@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3 col-md-6">
+        <div class="mb-3 col-12">
             <label class="form-label">Email</label>
             <input class="form-control" type="email" formControlName="email">
             <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger-sm">
@@ -34,7 +34,17 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3 col-md-6">
+        <div class="mb-4 col-md-6 position-relative">
+            <label class="form-label">Password</label>
+            <input class="form-control"  [type]="passwordShown ? 'text' : 'password' " formControlName="password">
+            <i class="bi pass-icon position-absolute" [ngClass]="{'bi-eye-fill': !passwordShown, 'bi-eye-slash-fill': passwordShown}" (click)="passwordShown = !passwordShown"></i>
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger-sm">
+                <div *ngIf="password?.errors?.['required']">
+                    Password is required.
+                </div>
+            </div>
+        </div>
+        <div class="mb-4 col-md-6">
             <label class="form-label">User Type</label>
             <select class="form-select" formControlName="userType">
                 <option selected disabled>Choose...</option>
@@ -47,17 +57,13 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3 col-md-6">
-            <label class="form-label">Password</label>
-            <input class="form-control" type="password" formControlName="password">
-            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger-sm">
-                <div *ngIf="password?.errors?.['required']">
-                    Password is required.
-                </div>
-            </div>
-        </div>
         <div class="col-12 d-flex justify-content-end">
-            <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">Submit</button>
+            <button type="submit" [disabled]="userForm.invalid || submitted" class="btn btn-primary">
+                Submit
+                <div *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </button>
         </div>
     </form>
 </div>

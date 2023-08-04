@@ -1,6 +1,7 @@
 .main {
     margin-left: 250px;
     margin-top: 80px;
+    min-height: calc(100vh - 80px);
 }
 .main-btn {
     border: none;
@@ -8,6 +9,9 @@
     background-color: #0d202d;
     padding: 0.55rem 1.5rem;
     color: #ffffff;
+}
+tbody {
+    position: relative;
 }
 th, td {
     color: #656565;
@@ -20,6 +24,7 @@ tbody tr {
 }
 tbody th, tbody td {
     padding: 1rem 0.5rem;
+    vertical-align: middle;
 }
 .is-active, .is-inactive, .is-processing, .is-processed, .is-pending {
     padding: 0.5rem 0.8rem;
@@ -36,6 +41,37 @@ tbody th, tbody td {
 .is-processing {
     background-color: #ffa600;
     color: #ffffff;
+}
+.spinner-size {
+    font-size: 5rem;
+    top: 40px;
+}
+.bi {
+    cursor: pointer;
+    font-size: 22px;
+    color: #ed1919;
+    position: relative;
+}
+/* .bi-pencil-square {
+    color: #000000;
+} */
+.btn-side {
+    font-size: 12px;
+}
+.bi-x-octagon {
+    color: #ed1919;
+}
+.bi-pencil-square span {
+    opacity: 0;
+    position: absolute;
+    transition: all 0.4s;
+    font-size: 14px;
+}
+.bi-pencil-square:hover span {
+    opacity: 1;
+    background-color: #0d202d;
+    color: #ffffff;
+    padding: 0.25rem 1rem;
 }
 @media (max-width: 992px) {
     .main {

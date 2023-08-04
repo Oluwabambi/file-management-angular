@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{userData.status ? 'Deactivate' : 'Activate'}} {{userData.firstName}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="bsModalRef.hide()"></button>
+</div>
+<div class="modal-body">
+    <p>Are you sure you want to {{userData.status ? 'deactivate' : 'activate'}} this user?</p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" type="button" (click)="bsModalRef.hide()">No</button>
+    <button class="btn btn-success ms-2" [disabled]="submitted" type="button" (click)="changeUserStatus(userData)">
+        Yes
+        <div *ngIf="updateLoading" class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </button>
+</div>

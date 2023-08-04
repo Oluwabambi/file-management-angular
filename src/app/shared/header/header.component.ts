@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-header',
@@ -7,14 +8,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  currentUser: any;
   title: string = ''
   // sideChange: boolean = false;
   // @Output() sideEvent = new EventEmitter<any>();
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private userService: UsersService) { }
 
   ngOnInit(): void {
     this.getTitle()
+    this.getCurrentUser();
+    
   }
 
   getTitle() {
@@ -24,6 +28,18 @@ export class HeaderComponent implements OnInit {
     } else if (path === 'feedback-upload') {
       this.title = 'Feedback Upload';
     }
+  }
+
+  getCurrentUser() {
+    this.userService.loggedInUser().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.currentUser = res;
+      },
+      error: (err) => {
+        console.log(err.error);        
+      }
+    })
   }
 
   // changeSide() {
