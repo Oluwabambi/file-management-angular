@@ -25,7 +25,6 @@ export class EditUserModalComponent implements OnInit {
   constructor(public bsModalRef: BsModalRef, private fb: FormBuilder, private userService: UsersService, private toast: NgxToastService) {}
 
   ngOnInit(): void {
-    console.log(this.userDetails);
     this.selectedUserEmail = this.userDetails.email;
     this.selectedUserType = this.userDetails.roleName[0];
 
@@ -36,10 +35,8 @@ export class EditUserModalComponent implements OnInit {
   getRoles() {
     this.userService.getRoles().subscribe({
       next: (res) => {
-        console.log(res);
         this.roleOptions = res;
         this.roleOptions = this.formatRoles(this.roleOptions);
-        console.log(this.roleOptions);
       }
     })
   }
@@ -88,13 +85,11 @@ export class EditUserModalComponent implements OnInit {
         this.isLoading = false;
         this.bsModalRef.hide();
         this.toast.success('User edited successfully')
-        console.log(res);
         this.submitted = false;
       },
       error: (err) => {
         this.isLoading = false;
         this.toast.success('User edited successfully')
-        console.log(err);
         this.submitted = false;
       },
     });

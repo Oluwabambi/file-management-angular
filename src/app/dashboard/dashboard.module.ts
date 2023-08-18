@@ -6,8 +6,10 @@ import { FeedbackUploadComponent } from './feedback-upload/feedback-upload.compo
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { SharedModule } from '../shared/shared.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
+import { OrderModule } from 'ngx-order-pipe';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     PaginationModule,
     NgxPaginationModule,
-    FormsModule
-  ]
+    FormsModule,
+    OrderModule,
+    // TooltipModule
+  ],
 })
 export class DashboardModule { }

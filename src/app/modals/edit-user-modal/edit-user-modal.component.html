@@ -5,12 +5,14 @@
 <div class="modal-body">
     <form class="row" (ngSubmit)="editUser()">
         <div class="mb-3 col-md-6">
-            <label class="form-label">First Name</label>
-            <input class="form-control bg-gray" type="text" value="{{userDetails.firstName}}" readonly>
+            <label class="form-label mb-0">First Name</label>
+            <p class="mb-0">{{userDetails.firstName}}</p>
+            <!-- <input class="form-control bg-gray" type="text" value="{{userDetails.firstName}}" readonly> -->
         </div>
         <div class="mb-3 col-md-6">
-            <label class="form-label">Last Name</label>
-            <input class="form-control" type="text" value="{{userDetails.lastName}}" readonly>
+            <label class="form-label mb-0">Last Name</label>
+            <p class="mb-0">{{userDetails.lastName}}</p>
+            <!-- <input class="form-control" type="text" value="{{userDetails.lastName}}" readonly> -->
         </div>
         <div class="mb-3 col-12">
             <label class="form-label">Email</label>

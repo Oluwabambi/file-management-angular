@@ -71,6 +71,14 @@ export class UploadModalComponent implements OnInit {
       },
       error: (err) => {
         // this.toast.success('File uploaded successfully');  // show success message for now
+        if (err.status !== 200) {
+          this.toast.success('File uploaded successfully');
+          this.isLoading = false;
+          this.submitted = false;
+          this.bsModalRef.hide();
+          this.fileUploaded.emit();
+          return;
+        }
         this.toast.error(err.error.text);
         this.isLoading = false;
         console.log(err);

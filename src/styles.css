@@ -8,7 +8,10 @@ body {
 }
 .toastr-box {
     background-size: 20px !important;
-    width: 270px !important;
+    min-width: 270px !important;
+}
+.toast-title {
+    font-size: 14px;
 }
 .pagination {
     justify-content: flex-end;

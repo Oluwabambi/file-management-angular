@@ -17,6 +17,7 @@ import { RequestInterceptor } from './interceptors/request.interceptor';
 import { EditUserModalComponent } from './modals/edit-user-modal/edit-user-modal.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ConfirmStatusComponent } from './modals/confirm-status/confirm-status.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,11 @@ import { ConfirmStatusComponent } from './modals/confirm-status/confirm-status.c
       useClass: RequestInterceptor,
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })

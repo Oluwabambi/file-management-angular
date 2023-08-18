@@ -1,5 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Globals } from 'src/app/_Classes/Globals';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { TokenService } from 'src/app/services/token.service';
 import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
@@ -10,15 +13,14 @@ import { UsersService } from 'src/app/services/users/users.service';
 export class HeaderComponent implements OnInit {
   currentUser: any;
   title: string = ''
-  // sideChange: boolean = false;
+  isMenuOpen: boolean = false;
   // @Output() sideEvent = new EventEmitter<any>();
 
-  constructor(private route: ActivatedRoute, private userService: UsersService) { }
+  constructor(private route: ActivatedRoute, private userService: UsersService, private authService: AuthService, private globals: Globals, private tokenService: TokenService) { }
 
   ngOnInit(): void {
     this.getTitle()
     this.getCurrentUser();
-    
   }
 
   getTitle() {
@@ -31,14 +33,22 @@ export class HeaderComponent implements OnInit {
   }
 
   getCurrentUser() {
-    this.userService.loggedInUser().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.currentUser = res;
-      },
-      error: (err) => {
-        console.log(err.error);        
-      }
+    this.currentUser = JSON.parse(this.tokenService.getUserDetails())
+    // this.userService.loggedInUser().subscribe({
+    //   next: (res) => {
+    //     this.currentUser = res;
+    //   },
+    //   error: (err) => {      
+    //   }
+    // })
+  }
+
+  onLogout() {
+    const data = ''
+    this.authService.logout(data).subscribe({
+      next: (res)=>{
+        console.log(res);     
+      }    
     })
   }
 

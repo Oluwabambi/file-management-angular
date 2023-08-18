@@ -22,6 +22,41 @@
 .navbar-toggler:focus {
     box-shadow: none;
 }
+.profile-menu {
+    position: relative;
+}
+.sub-menu {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    display: none;
+    list-style-type: none;
+    right: 0;
+    min-width: 180px;
+    margin: 0;
+}
+.sub-menu-item {
+    transition: all 0.2s;
+}
+.sub-menu-item:hover {
+    background-color: #404040;
+}
+.sub-menu-item a {
+    color: #404040;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+.sub-menu-item:hover a {
+    color: #ffffff;
+}
+.sub-menu.show {
+    display: block;
+}
+.bi-person-circle {
+    font-size: 22px;
+}
 @media (max-width: 992px) {
     .header {
         margin-left: 0;

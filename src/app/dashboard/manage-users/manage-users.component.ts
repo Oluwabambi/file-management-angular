@@ -70,7 +70,6 @@ export class ManageUsersComponent implements OnInit {
           item.dateAdded = itemDate
           return item
         })
-        console.log(res);
         this.users = res;
       }
     })
@@ -107,12 +106,10 @@ export class ManageUsersComponent implements OnInit {
       next: (res) => {
         this.updateLoading = false;
         this.getUsers();
-        console.log(res);
         this.toast.success('User status updated')
       },
       error: (err) => {
         this.updateLoading = false;
-        console.log(err);
         this.toast.error('An error occured')
       }
     })

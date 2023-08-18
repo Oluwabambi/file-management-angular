@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,24 +9,24 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(private router: Router, private authService: AuthService) {}
+  currentUser: any;
+
+  constructor(private tokenService: TokenService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    // this.sharedService.value.subscribe({
-    //   next: (res) => {
-    //     this.sideChanged = res;
-    //   }
-    // })
+    this.getCurrentUser();
+  }
+
+  getCurrentUser() {
+    this.currentUser = JSON.parse(this.tokenService.getUserDetails());
   }
 
   onLogout() {
-    const data = ''
+    const data = '';
     this.authService.logout(data).subscribe({
-      next: (res)=>{
+      next: (res) => {
         console.log(res);
-        
-      }    
-    })
-    // this.router.navigateByUrl('/auth/login');
+      },
+    });
   }
 }

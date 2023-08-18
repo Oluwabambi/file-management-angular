@@ -15,7 +15,7 @@
                     <i class="bi bi-upload me-3"></i>
                     <span>Feedback Upload</span>
                 </a>
-                <a routerLink="/manage-users" [routerLinkActive]="['active']" class="menu-item p-2">
+                <a *ngIf="currentUser.roles[0] === 'ROLE_ADMIN'" routerLink="/manage-users" [routerLinkActive]="['active']" class="menu-item p-2">
                     <i class="bi bi-people-fill me-3"></i>
                     <span>Manage Users</span>
                 </a>

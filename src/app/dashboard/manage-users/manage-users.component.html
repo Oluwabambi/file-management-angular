@@ -40,13 +40,13 @@
                                     <span class="visually-hidden">Loading...</span>
                                 </div>
                             </button> -->
-                            <button placement="auto" (click)="showConfirmModal(item)" class="btn btn-side" [ngClass]="{'btn-danger': item.status, 'btn-success': !item.status}" tooltip="Deactivate">
+                            <button (click)="showConfirmModal(item)" class="btn btn-side" [ngClass]="{'btn-danger': item.status, 'btn-success': !item.status}">
                                 {{item.status ? 'Deactivate' : 'Activate'}}
                                                             <!-- <div *ngIf="updateLoading && userToUpdate === item.id" class="spinner-border spinner-border-sm" role="status">
                                                                 <span class="visually-hidden">Loading...</span>
                                                             </div> -->
                             </button>
-                            <i (click)="showEditModal(item)" class="bi bi-pencil-square ms-2" tooltip="Edit" placement="auto"></i>
+                            <i (click)="showEditModal(item)" class="bi bi-pencil-square ms-2" tooltip="Edit"></i>
                             <!-- <i class="bi bi-x-octagon ms-2"></i> -->
                         </div>
                     </td>

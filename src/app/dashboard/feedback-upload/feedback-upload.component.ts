@@ -1,9 +1,9 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { ToastrService } from 'ngx-toastr';
+import { Globals } from 'src/app/_Classes/Globals';
 import { UploadModalComponent } from 'src/app/modals/upload-modal/upload-modal.component';
 import { NgxToastService } from 'src/app/services/toasts/ngx-toast.service';
+import { TokenService } from 'src/app/services/token.service';
 import { FilesService } from 'src/app/services/upload/files.service';
 import { UsersService } from 'src/app/services/users/users.service';
 
@@ -16,71 +16,33 @@ export class FeedbackUploadComponent implements OnInit {
   isLoading: boolean = true;
   toastOpen: boolean = false;
   files: any;
+  key: any = 'dateUploaded';
+  reverse: boolean = false;
   itemsPerPage = 6;
   currentPage = 1;
-  // files: any = [
-  //   {
-  //     id: 1,
-  //     description: 'description 1',
-  //     date_uploaded: '21/05/2023',
-  //     file_size: '2.50MB',
-  //     status: 'Processed',
-  //     user_id: 1,
-  //   },
-  //   {
-  //     id: 2,
-  //     description: 'description 2',
-  //     date_uploaded: '11/11/2023',
-  //     file_size: '23.00MB',
-  //     status: 'Processed',
-  //     user_id: 2,
-  //   },
-  //   {
-  //     id: 3,
-  //     description: 'description 3',
-  //     date_uploaded: '14/12/2023',
-  //     file_size: '10.50MB',
-  //     status: 'Processing',
-  //     user_id: 3,
-  //   },
-  //   {
-  //     id: 4,
-  //     description: 'description 4',
-  //     date_uploaded: '03/07/2023',
-  //     file_size: '22.45MB',
-  //     status: 'Processing',
-  //     user_id: 4,
-  //   },
-  //   {
-  //     id: 5,
-  //     description: 'description 5',
-  //     date_uploaded: '10/05/2023',
-  //     file_size: '9.70MB',
-  //     status: 'Pending',
-  //     user_id: 2,
-  //   },
-  // ];
+  currentUser: any;
 
   constructor(
     private modalService: BsModalService,
     private toastr: NgxToastService,
-    private testi: UsersService,
-    private fileService: FilesService
+    private fileService: FilesService,
+    private userService: UsersService,
+    private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     this.getFiles();
-    let headers = new HttpHeaders();
-    console.log(headers);
-    console.log(localStorage.getItem('cookie'));
-    this.testi.getUsers().subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.getUserRole()
+  }
+
+  getUserRole() {
+    this.currentUser = JSON.parse(this.tokenService.getUserDetails());
+    
+    // this.userService.loggedInUser().subscribe({
+    //   next: (res) => {
+    //     this.currentUser = res
+    //   }
+    // })
   }
 
   openModal() {
@@ -100,8 +62,11 @@ export class FeedbackUploadComponent implements OnInit {
     this.isLoading = true;
     this.fileService.allFiles().subscribe({
       next: (res) => {
-        console.log(res);
         this.isLoading = false;
+        res.forEach((item: any) => {
+          const itemDate = item?.dateUploaded.split('T')[0]
+          item.dateUploaded = itemDate
+        })
         this.files = res;
       },
     });
@@ -115,13 +80,12 @@ export class FeedbackUploadComponent implements OnInit {
         console.log(url);
         const link = document.createElement('a');
         link.href = url;
-        link.target = '_blank'; 
+        link.target = '_blank';
         link.download = data.fileName;
         link.click();
 
         // Clean up the URL object
         window.URL.revokeObjectURL(url);
-        
       },
       error: (err) => {
         console.log(err);
@@ -130,10 +94,11 @@ export class FeedbackUploadComponent implements OnInit {
   }
 
   pageChanged(event: any) {
-    this.currentPage = event.page
+    this.currentPage = event.page;
   }
 
-  // changeSide(val: any) {
-  //   this.sideChanged = val
-  // }
+  sort(key: any) {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
 }

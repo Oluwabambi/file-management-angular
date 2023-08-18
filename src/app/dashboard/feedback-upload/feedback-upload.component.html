@@ -11,19 +11,19 @@
                 <tr>
                     <th scope="col">S/N</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Uploaded By</th>
+                    <th *ngIf="currentUser?.roles[0] === 'ROLE_ADMIN'" scope="col">Uploaded By</th>
                     <th scope="col">Date Uploaded</th>
-                    <th scope="col">File Size</th>
+                    <th scope="col" (click)="sort('fileSize')">File Size</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <i *ngIf="isLoading" class="fa-solid fa-gear fa-spin spinner-size position-absolute start-50"></i>
-                <tr *ngFor="let item of files | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}; let i = index">
+                <tr *ngFor="let item of files | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage} | orderBy: key: reverse; let i = index">
                     <th scope="row">{{i + 1}}</th>
                     <td>{{item.description}}</td>
-                    <td>{{item.uploadedBy}}</td>
+                    <td *ngIf="currentUser?.roles[0] === 'ROLE_ADMIN'">{{item.uploadedBy}}</td>
                     <td>{{item.dateUploaded}}</td>
                     <td>{{item.fileSize}}</td>
                     <td>
