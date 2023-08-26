@@ -47,7 +47,6 @@ export class UploadModalComponent implements OnInit {
       this.files.push(...event.addedFiles);
       this.addedFile = event.addedFiles[0];
       this.uploadData.append('file', this.addedFile);
-      console.log(this.addedFile);
       this.rejectedFile = false;
     }
   }
@@ -57,7 +56,6 @@ export class UploadModalComponent implements OnInit {
     this.submitted = true;
     const descValue: any = this.description.value;
     this.uploadData.append('description', descValue);
-    console.log(this.uploadData);
 
     this.fileService.uploadFile(this.uploadData).subscribe({
       next: (res) => {

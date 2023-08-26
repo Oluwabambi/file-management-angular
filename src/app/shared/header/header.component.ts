@@ -14,7 +14,6 @@ export class HeaderComponent implements OnInit {
   currentUser: any;
   title: string = ''
   isMenuOpen: boolean = false;
-  // @Output() sideEvent = new EventEmitter<any>();
 
   constructor(private route: ActivatedRoute, private userService: UsersService, private authService: AuthService, private globals: Globals, private tokenService: TokenService) { }
 
@@ -34,28 +33,16 @@ export class HeaderComponent implements OnInit {
 
   getCurrentUser() {
     this.currentUser = JSON.parse(this.tokenService.getUserDetails())
-    // this.userService.loggedInUser().subscribe({
-    //   next: (res) => {
-    //     this.currentUser = res;
-    //   },
-    //   error: (err) => {      
-    //   }
-    // })
   }
 
   onLogout() {
     const data = ''
     this.authService.logout(data).subscribe({
       next: (res)=>{
-        console.log(res);     
+        // console.log(res); 
+        return;    
       }    
     })
   }
-
-  // changeSide() {
-  //   this.sideChange = !this.sideChange
-  //   this.sideEvent.emit(this.sideChange)
-  //   this.sharedService.setValue(this.sideChange)
-  // }
 
 }

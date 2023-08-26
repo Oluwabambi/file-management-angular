@@ -77,7 +77,6 @@ export class FeedbackUploadComponent implements OnInit {
       next: (fileInfo: Blob) => {
         console.log(fileInfo);
         const url = window.URL.createObjectURL(fileInfo);
-        console.log(url);
         const link = document.createElement('a');
         link.href = url;
         link.target = '_blank';

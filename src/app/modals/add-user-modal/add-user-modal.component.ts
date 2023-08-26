@@ -68,7 +68,6 @@ export class AddUserModalComponent implements OnInit {
         this.toast.success('User added successfully');
         this.bsModalRef.hide();
         this.userCreated.emit();
-        console.log(res);
       },
       error: (err) => {
         console.log(err);

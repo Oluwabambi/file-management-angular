@@ -85,7 +85,6 @@ export class ManageUsersComponent implements OnInit {
     const confirmModalRef = this.modalService.show(ConfirmStatusComponent, { initialState })
     confirmModalRef.content?.statusUpdated.subscribe({
       next: (res: any) => {
-        console.log(res);
         this.getUsers();
       }
     })
@@ -94,7 +93,6 @@ export class ManageUsersComponent implements OnInit {
   changeUserStatus(user:any) {
     this.userToUpdate = user.id
     this.updateLoading = true
-    console.log(user);
     const userStatus: any = {}
     if (user.status === 'active') {
       userStatus['status'] = 'Inactive'

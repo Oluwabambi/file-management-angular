@@ -10,6 +10,7 @@
 }
 .auth-form {
     width: 65%;
+    position: relative;
 }
 .auth-form-container {
     max-width: 450px;
@@ -49,8 +50,38 @@ label {
     cursor: pointer;
     font-size: 19px;
 }
+.falog {
+    font-size: 8.5rem;
+    color: #ffffff;
+    margin-bottom: 3rem;
+}
+.up-copy {
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+}
+.mob-title {
+    margin-bottom: 2rem;
+    color: #ffffff;
+    /* text-shadow: 1px 1px 2px #000000, 0px 0px 8px #0d720b, 0px 0px 5px #0c720c; */
+    text-shadow: 1px 1px 1px #000000, 0px 0px 10px #0d720b, 0px 0px 0px #0c720c;
+}
 @media (max-width: 990px) {
     .auth-form {
         width: 100%;
+    }
+}
+@media (max-width: 576px) {
+    .auth-form {
+        padding-top: 4rem;
+    }
+    .up-copy {
+        position: static;
+        margin-top: 3rem;
+    }
+}
+@media (max-width: 440px) {
+    .auth-form-container {
+        max-width: 350px;
     }
 }

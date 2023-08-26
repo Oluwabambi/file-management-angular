@@ -24,7 +24,6 @@ export class ConfirmStatusComponent implements OnInit {
   changeUserStatus(user: any) {
     this.updateLoading = true;
     this.submitted = true;
-    console.log(user);
     const uId = +user.id
     const userStatus: any = { userId: uId }
     if (user.status) {
@@ -37,7 +36,6 @@ export class ConfirmStatusComponent implements OnInit {
         this.updateLoading = false;
         this.submitted = false;
         // this.getUsers();
-        console.log(res);
         this.bsModalRef.hide();
         this.statusUpdated.emit();
         this.submitted = false;
@@ -45,7 +43,6 @@ export class ConfirmStatusComponent implements OnInit {
       },
       error: (err) => {
         this.updateLoading = false;
-        console.log(err);
         if (err.status === 200) {
           this.toast.success('User status updated');
           this.bsModalRef.hide();

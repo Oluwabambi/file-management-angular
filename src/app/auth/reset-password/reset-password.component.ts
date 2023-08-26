@@ -7,7 +7,7 @@ import { NgxToastService } from 'src/app/services/toasts/ngx-toast.service';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  styleUrls: ['./reset-password.component.css', '../auth.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
   isLoading: boolean = false;
