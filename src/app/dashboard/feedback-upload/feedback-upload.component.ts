@@ -21,6 +21,7 @@ export class FeedbackUploadComponent implements OnInit {
   itemsPerPage = 6;
   currentPage = 1;
   currentUser: any;
+  term = '';
 
   constructor(
     private modalService: BsModalService,
@@ -31,18 +32,12 @@ export class FeedbackUploadComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getFiles();
     this.getUserRole()
+    this.getFiles();
   }
 
   getUserRole() {
     this.currentUser = JSON.parse(this.tokenService.getUserDetails());
-    
-    // this.userService.loggedInUser().subscribe({
-    //   next: (res) => {
-    //     this.currentUser = res
-    //   }
-    // })
   }
 
   openModal() {
@@ -60,16 +55,29 @@ export class FeedbackUploadComponent implements OnInit {
 
   getFiles() {
     this.isLoading = true;
-    this.fileService.allFiles().subscribe({
-      next: (res) => {
-        this.isLoading = false;
-        res.forEach((item: any) => {
-          const itemDate = item?.dateUploaded.split('T')[0]
-          item.dateUploaded = itemDate
-        })
-        this.files = res;
-      },
-    });
+    if (this.currentUser.roles[0] === 'ROLE_ADMIN') {
+      this.fileService.allFiles().subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          res.forEach((item: any) => {
+            const itemDate = item?.dateUploaded.split('T')[0]
+            item.dateUploaded = itemDate
+          })
+          this.files = res;
+        },
+      });
+    } else {
+      this.fileService.allUserFiles().subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          res.forEach((item: any) => {
+            const itemDate = item?.dateUploaded.split('T')[0]
+            item.dateUploaded = itemDate
+          })
+          this.files = res;
+        },
+      })
+    }
   }
 
   fileDownload(data: any) {

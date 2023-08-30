@@ -10,6 +10,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { OrderModule } from 'ngx-order-pipe';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { OrderModule } from 'ngx-order-pipe';
     NgxPaginationModule,
     FormsModule,
     OrderModule,
+    Ng2SearchPipeModule
     // TooltipModule
   ],
 })

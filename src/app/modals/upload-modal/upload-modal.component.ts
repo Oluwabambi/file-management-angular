@@ -59,8 +59,7 @@ export class UploadModalComponent implements OnInit {
 
     this.fileService.uploadFile(this.uploadData).subscribe({
       next: (res) => {
-        console.log(res);
-        // this.toast.success('File uploaded successfully');
+        this.toast.success('File uploaded successfully');
         this.isLoading = false;
         this.bsModalRef.hide();
         this.fileUploaded.emit();

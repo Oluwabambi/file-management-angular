@@ -7,15 +7,19 @@ import { ApiHandlerService } from '../api-handler.service';
 export class FilesService {
   constructor(private api: ApiHandlerService) {}
 
-  uploadFile(data:any) {
+  uploadFile(data: any) {
     return this.api.post('upload-file', data);
   }
 
   allFiles() {
-    return this.api.get('all-files')
+    return this.api.get('all-files');
   }
 
-  downloadFile(id:any) {
-    return this.api.downloadFile(`download-file/${id}`)
+  allUserFiles() {
+    return this.api.get('files-uploaded-by-user');
+  }
+
+  downloadFile(id: any) {
+    return this.api.downloadFile(`download-file/${id}`);
   }
 }

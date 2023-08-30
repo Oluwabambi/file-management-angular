@@ -5,6 +5,19 @@
         <button class="main-btn" type="button" (click)="openModal()">Add User</button>
     </div>
     <div class="main-table w-100 overflow-x-auto flex-grow-1">
+        <div class="card border-0 mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <h3>Users</h3>
+                    </div>
+                    <div class="col-4 ms-auto">
+                        <label class="form-label f-label mb-0">Search</label>
+                        <input class="form-control s-input" type="text" [(ngModel)]="term" placeholder="Enter keyword...">
+                    </div>
+                </div>
+            </div>
+        </div>
         <table class="table table-striped">
             <thead >
                 <tr>
@@ -20,7 +33,8 @@
             </thead>
             <tbody>
                 <i *ngIf="isLoading" class="fa-solid fa-gear fa-spin spinner-size position-absolute start-50"></i>
-                <tr *ngFor="let item of users | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}; let i = index">
+                <p class="position-absolute start-50 translate-middle-x mt-2" *ngIf="users?.length === 0">There are no files to display</p>
+                <tr *ngFor="let item of users | filter: term | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}; let i = index">
                     <th scope="row">{{i + 1}}</th>
                     <td>{{item.firstName}}</td>
                     <td>{{item.lastName}}</td>
@@ -54,7 +68,7 @@
             </tbody>
         </table>
         <div class="row">
-            <div class="col-6 ms-auto">
+            <div *ngIf="users.length > 0" class="col-6 ms-auto">
                 <pagination [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [totalItems]="users?.length" [(ngModel)]="currentPage" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"></pagination>
             </div>
         </div>

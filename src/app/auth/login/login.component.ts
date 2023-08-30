@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   });
 
+  currentYear = new Date().getFullYear()
+
   constructor(private router: Router, private authService: AuthService, private tokenService: TokenService, private toast: NgxToastService) {}
 
   ngOnInit(): void {}

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { AddUserModalComponent } from 'src/app/modals/add-user-modal/add-user-modal.component';
 import { ConfirmStatusComponent } from 'src/app/modals/confirm-status/confirm-status.component';
 import { EditUserModalComponent } from 'src/app/modals/edit-user-modal/edit-user-modal.component';
 import { NgxToastService } from 'src/app/services/toasts/ngx-toast.service';
+import { TokenService } from 'src/app/services/token.service';
 import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
@@ -21,26 +23,15 @@ export class ManageUsersComponent implements OnInit {
   userToUpdate: any;
   itemsPerPage = 6;
   currentPage = 1;
-  // users: any = [
-  //   { id: 1, firstName: "firstName 1", lastName: "lastName 1", email: 'email1@gmail.com', date_added: '21/05/2023', lastLogin: '10/09/23', status: 'Active', userType: 'Admin', },
-  //   { id: 2, firstName: "firstName 2", lastName: "lastName 2", email: 'email2@gmail.com', date_added: '11/11/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'User', },
-  //   { id: 3, firstName: "firstName 3", lastName: "lastName 3", email: 'email3@gmail.com', date_added: '14/12/2023', lastLogin: '10/09/23', status: 'Active', userType: 'User', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  //   { id: 4, firstName: "firstName 4", lastName: "lastName 4", email: 'email4@gmail.com', date_added: '03/07/2023', lastLogin: '10/09/23', status: 'Inactive', userType: 'Admin', },
-  // ]
+  term = '';
 
-  constructor(private modalService: BsModalService, private userService: UsersService, private toast: NgxToastService) { }
+  constructor(private modalService: BsModalService, private userService: UsersService, private toast: NgxToastService, private router: Router, private tokenService: TokenService) { }
 
   ngOnInit(): void {
     this.getUsers();
+    if (!this.tokenService.isAdmin()) {
+      this.router.navigateByUrl('/feedback-upload');
+    }
   }
 
   openModal() {

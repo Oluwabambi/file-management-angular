@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,7 +20,7 @@ export class ResetPasswordComponent implements OnInit {
     confrimNewPassword: new FormControl('', [Validators.required]),
   })
 
-  constructor(private authService: AuthService, private toast: NgxToastService, private router: Router) { }
+  constructor(private authService: AuthService, private toast: NgxToastService, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
   }
@@ -43,6 +44,10 @@ export class ResetPasswordComponent implements OnInit {
       }
     })
 
+  }
+
+  goBack() {
+    this.location.back()
   }
 
 }

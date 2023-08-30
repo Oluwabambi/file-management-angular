@@ -52,6 +52,14 @@ export class TokenService {
     return localStorage.getItem('token');
   }
 
+  public isAdmin(): boolean {
+    const user: any = JSON.parse(this.getUserDetails())
+    if (user?.roles[0] === 'ROLE_ADMIN') {
+      return true;
+    }
+    return false;
+  }
+  
   public isTokenExpired(): boolean {
     const token = this.getToken();
     if (!token) {
