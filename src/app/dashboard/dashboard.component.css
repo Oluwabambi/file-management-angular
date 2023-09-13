@@ -10,8 +10,8 @@
     padding: 0.55rem 1.5rem;
     color: #ffffff;
 }
-tbody {
-    position: relative;
+.table-contain {
+    min-height: 150px;
 }
 th, td {
     color: #656565;
@@ -19,12 +19,16 @@ th, td {
 thead th {
     font-size: 15px;
 }
+tbody {
+    min-height: 100px;
+}
 tbody tr {
     font-size: 13px;
 }
 tbody th, tbody td {
     padding: 1rem 0.5rem;
     vertical-align: middle;
+    white-space: nowrap;
 }
 .is-active, .is-inactive, .is-processing, .is-processed, .is-pending {
     padding: 0.5rem 0.8rem;
@@ -43,8 +47,10 @@ tbody th, tbody td {
     color: #ffffff;
 }
 .spinner-size {
+    width: 90px;
     font-size: 5rem;
-    top: 40px;
+    top: 80px;
+    z-index: 99;
 }
 .bi {
     cursor: pointer;
@@ -82,6 +88,61 @@ tbody th, tbody td {
 input:focus {
     box-shadow: none;
     border-color: #0a2723;
+}
+.spinner-size img {
+    background: transparent;
+    animation: imgrotate 2s linear infinite;
+}
+thead th {
+    position: relative;
+    cursor: pointer;
+}
+thead th:not(th:last-child):before {
+    /* top: 0px; */
+    content: "\F235";
+    top: 5px;
+}
+thead th:not(th:last-child):after {
+    content: "\F229";
+    top: 14px;
+}
+thead th::after, thead th::before {
+    opacity: 0.4;
+    position: absolute;
+    font-size: 0.7rem;
+    right: 5px;
+    left: auto;
+    font-family: bootstrap-icons !important;
+}
+thead th.tosortasc::before {
+    opacity: 1;
+}
+thead th.tosortasc::after {
+    opacity: 0.4;
+}
+thead th.tosortdesc::before {
+    opacity: 0.4;
+}
+thead th.tosortdesc::after {
+    opacity: 1;
+}
+.table-info p {
+    font-size: 14px;
+}
+ng-select {
+    font-size: 14px;
+}
+@keyframes imgrotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@media (max-width: 1150px) {
+    .main-table .files-table {
+        min-width: 870px;
+    }
+    .main-table .users-table {
+        min-width: 1100px;
+    }
 }
 @media (max-width: 992px) {
     .main {

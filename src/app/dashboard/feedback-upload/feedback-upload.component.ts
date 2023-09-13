@@ -5,7 +5,6 @@ import { UploadModalComponent } from 'src/app/modals/upload-modal/upload-modal.c
 import { NgxToastService } from 'src/app/services/toasts/ngx-toast.service';
 import { TokenService } from 'src/app/services/token.service';
 import { FilesService } from 'src/app/services/upload/files.service';
-import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-feedback-upload',
@@ -17,23 +16,31 @@ export class FeedbackUploadComponent implements OnInit {
   toastOpen: boolean = false;
   files: any;
   key: any = 'dateUploaded';
-  reverse: boolean = false;
-  itemsPerPage = 6;
+  reverse: boolean = true;
+  itemsPerPage = 25;
   currentPage = 1;
   currentUser: any;
   term = '';
+  entriesOptions: any = [
+    { id: 1, label: '10', pageItems: 10 },
+    { id: 2, label: '15', pageItems: 15 },
+    { id: 3, label: '20', pageItems: 20 },
+    { id: 4, label: '25', pageItems: 25 },
+    { id: 5, label: '30', pageItems: 30 },
+  ];
 
   constructor(
     private modalService: BsModalService,
     private toastr: NgxToastService,
     private fileService: FilesService,
-    private userService: UsersService,
     private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
-    this.getUserRole()
+    this.getUserRole();
     this.getFiles();
+    console.log(this.key);
+    
   }
 
   getUserRole() {
@@ -59,24 +66,24 @@ export class FeedbackUploadComponent implements OnInit {
       this.fileService.allFiles().subscribe({
         next: (res) => {
           this.isLoading = false;
-          res.forEach((item: any) => {
-            const itemDate = item?.dateUploaded.split('T')[0]
-            item.dateUploaded = itemDate
-          })
+          res.forEach((item: any, index: any) => {
+            item.itemIndex = index;
+          });
           this.files = res;
+          this.entriesOptions.push({ id: 6, label: 'All', pageItems: this.files?.length });
         },
       });
     } else {
       this.fileService.allUserFiles().subscribe({
         next: (res) => {
           this.isLoading = false;
-          res.forEach((item: any) => {
-            const itemDate = item?.dateUploaded.split('T')[0]
-            item.dateUploaded = itemDate
-          })
+          res.forEach((item: any, index: any) => {
+            item.itemIndex = index;
+          });
           this.files = res;
+          this.entriesOptions.push({ id: 6, label: 'All', pageItems: this.files?.length })
         },
-      })
+      });
     }
   }
 
@@ -105,7 +112,15 @@ export class FeedbackUploadComponent implements OnInit {
   }
 
   sort(key: any) {
+    if (this.key !== key) {
+      if (key === 'dateUploaded') {
+        this.reverse = true;
+      } else {
+        this.reverse = false;
+      }
+    } else {
+      this.reverse = !this.reverse;
+    }
     this.key = key;
-    this.reverse = !this.reverse;
   }
 }

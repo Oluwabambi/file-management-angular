@@ -116,7 +116,11 @@ export class TokenService {
     let splitDate = lastActDate.split(' ')[0]
     splitDate = splitDate.split('-').reverse().join('-');
     let lastActTime = lastActDate.split(' ')[1]
-
+    let splitLastTime = lastActTime.split(':')
+    if (splitLastTime[0].length === 1) {
+      splitLastTime[0] = '0' + splitLastTime[0]; 
+    }
+    lastActTime = splitLastTime.join(':')
     lastActDate = splitDate + 'T' + lastActTime;
     lastActDate = Date.parse(lastActDate)
     return lastActDate;

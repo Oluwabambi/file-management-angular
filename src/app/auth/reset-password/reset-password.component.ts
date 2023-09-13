@@ -17,7 +17,7 @@ export class ResetPasswordComponent implements OnInit {
   passwordForm = new FormGroup({
     oldPassword: new FormControl('', [Validators.required]),
     newPassword: new FormControl('', [Validators.required]),
-    confrimNewPassword: new FormControl('', [Validators.required]),
+    confirmNewPassword: new FormControl('', [Validators.required]),
   })
 
   constructor(private authService: AuthService, private toast: NgxToastService, private router: Router, private location: Location) { }
@@ -37,6 +37,8 @@ export class ResetPasswordComponent implements OnInit {
 
     this.authService.resetPassword(this.passwordForm.value).subscribe({
       next: (res) => {
+        this.submitted = false;
+        this.isLoading = false;
         this.toast.success(res.body);
         setTimeout(()=> {
           this.router.navigateByUrl('/feedback-upload')

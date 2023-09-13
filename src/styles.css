@@ -15,9 +15,17 @@ body {
 }
 .pagination {
     justify-content: flex-end;
+    margin-bottom: 0;
 }
 .page-link {
     font-size: 13px;
+}
+.ng-select .ng-clear-wrapper {
+    width: 8px;
+    margin-left: 3px;
+}
+.ng-select .ng-clear-wrapper .ng-clear {
+    margin-top: 5px;
 }
 @media (max-width:576px) {
     .modal-dialog {

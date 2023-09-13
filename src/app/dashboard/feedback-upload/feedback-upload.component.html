@@ -5,7 +5,7 @@
         <button class="main-btn" type="button" (click)="openModal()">Upload File</button>
         <!-- <button class="btn btn-primary" (click)="openToastr()">open toast</button> -->
     </div>
-    <div class="main-table w-100 overflow-x-auto flex-grow-1 bg-white">
+    <div class="main-table w-100 bg-white flex-grow-1 d-flex flex-column">
         <div class="card border-0 mb-3">
             <div class="card-body">
                 <div class="row">
@@ -19,39 +19,54 @@
                 </div>
             </div>
         </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">S/N</th>
-                    <th scope="col">Description</th>
-                    <th *ngIf="currentUser?.roles[0] === 'ROLE_ADMIN'" scope="col">Uploaded By</th>
-                    <th scope="col">Date Uploaded</th>
-                    <th scope="col" (click)="sort('fileSize')">File Size</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <i *ngIf="isLoading" class="fa-solid fa-gear fa-spin spinner-size position-absolute start-50"></i>
-                <p class="position-absolute start-50 translate-middle-x mt-2" *ngIf="files?.length === 0">There are no files to display</p>
-                <tr *ngFor="let item of files | filter: term | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage} | orderBy: key: reverse; let i = index">
-                    <th scope="row">{{i + 1}}</th>
-                    <td>{{item.description}}</td>
-                    <td *ngIf="currentUser?.roles[0] === 'ROLE_ADMIN'">{{item.uploadedBy}}</td>
-                    <td>{{item.dateUploaded}}</td>
-                    <td>{{item.fileSize}}</td>
-                    <td>
-                        <span [ngClass]="{'is-pending': item.status.toLowerCase() === 'pending', 'is-processing': item.status.toLowerCase() === 'processing', 'is-processed': item.status.toLowerCase() === 'processed'}">
-                            {{item.status}}
-                        </span>
-                    </td>
-                    <td><button (click)="fileDownload(item)" class="btn btn-primary">Download file</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <div *ngIf="files?.length > 0" class="row">
-            <div class="col-6 ms-auto">
-                <pagination [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"  [totalItems]="files?.length" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+        <div class="table-responsive position-relative table-contain">
+            <table class="table files-table table-striped">
+                <thead>
+                    <tr>
+                        <th [ngClass]="{'tosortdesc': key === 'itemIndex' && reverse, 'tosortasc': key === 'itemIndex' && !reverse}" scope="col" (click)="sort('itemIndex')">S/N</th>
+                        <th [ngClass]="{'tosortdesc': key === 'description' && reverse, 'tosortasc': key === 'description' && !reverse}" scope="col" (click)="sort('description')">Description</th>
+                        <th [ngClass]="{'tosortdesc': key === 'uploadedBy' && reverse, 'tosortasc': key === 'uploadedBy' && !reverse}" *ngIf="currentUser?.roles[0] === 'ROLE_ADMIN'" scope="col" (click)="sort('uploadedBy')">Uploaded By</th>
+                        <th [ngClass]="{'tosortasc': key === 'dateUploaded' && reverse, 'tosortdesc': key === 'dateUploaded' && !reverse}" scope="col" (click)="sort('dateUploaded')">Date Uploaded</th>
+                        <th [ngClass]="{'tosortdesc': key === 'fileSize' && reverse, 'tosortasc': key === 'fileSize' && !reverse}" scope="col" (click)="sort('fileSize')">File Size</th>
+                        <th [ngClass]="{'tosortdesc': key === 'status' && reverse, 'tosortasc': key === 'status' && !reverse}" scope="col" (click)="sort('status')">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <i *ngIf="isLoading" class="fa-solid fa-gear fa-spin spinner-size position-absolute start-50"></i> -->
+                    <div *ngIf="isLoading" class="spinner-size position-absolute start-50 translate-middle">
+                        <img src="../../../assets/gear-solid.svg" alt="spinner">
+                    </div>
+                    <p class="position-absolute start-50 translate-middle-x mt-2" *ngIf="files?.length === 0">There are no files to display</p>
+                    <tr *ngFor="let item of files | filter: term | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage} | orderBy: key: reverse  let i = index">
+                        <!-- <th scope="row">{{(currentPage-1)*itemsPerPage + i + 1}}</th> -->
+                        <th scope="row">{{item.itemIndex + 1}}</th>
+                        <td>{{item.description}}</td>
+                        <td *ngIf="currentUser?.roles[0] === 'ROLE_ADMIN'">{{item.uploadedBy}}</td>
+                        <td>{{item.dateUploaded}}</td>
+                        <td>{{item.fileSize}}</td>
+                        <td>
+                            <span [ngClass]="{'is-pending': item.status.toLowerCase() === 'pending', 'is-processing': item.status.toLowerCase() === 'processing', 'is-processed': item.status.toLowerCase() === 'processed'}">
+                                {{item.status}}
+                            </span>
+                        </td>
+                        <td><button (click)="fileDownload(item)" class="btn btn-primary text-nowrap">Download file</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="files?.length > 0" class="table-info row flex-sm-row flex-column justify-content-between">
+            <div class="col-sm-3 col">
+                <p>{{files?.length}} {{ files?.length === 1 ? "record" : "records"}} found.</p>
+            </div>
+            <div class="col-sm-8 col-md-6 col ms-sm-auto d-flex justify-content-sm-end align-items-center">
+                <div class="d-flex align-items-center">
+                    <p class="mb-0">No. of Entries:</p>
+                    <ng-select class="ms-2 flex-grow-1" [items]="entriesOptions" bindLabel="label" bindValue="pageItems" name="pageItems" required [(ngModel)]="itemsPerPage"></ng-select>
+                </div>
+                <div class="ms-2">
+                    <pagination [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"  [totalItems]="files?.length" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+                </div>
             </div>
         </div>
     </div>
