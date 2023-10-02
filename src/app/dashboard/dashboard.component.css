@@ -10,6 +10,10 @@
     padding: 0.55rem 1.5rem;
     color: #ffffff;
 }
+.filter-btn {
+    background-color: #113a34 !important;
+    border: none;
+}
 .table-contain {
     min-height: 150px;
 }
@@ -82,7 +86,7 @@ tbody th, tbody td {
 .f-label {
     font-size: 15px;
 }
-.s-input {
+.f-input {
     font-size: 14px;
 }
 input:focus {
@@ -135,6 +139,11 @@ ng-select {
 @keyframes imgrotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+@media (max-width: 1400px) {
+    .main-table .files-table {
+        min-width: 1280px;
+    }
 }
 @media (max-width: 1150px) {
     .main-table .files-table {

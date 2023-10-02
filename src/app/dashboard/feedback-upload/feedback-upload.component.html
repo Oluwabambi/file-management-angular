@@ -5,6 +5,21 @@
         <button class="main-btn" type="button" (click)="openModal()">Upload File</button>
         <!-- <button class="btn btn-primary" (click)="openToastr()">open toast</button> -->
     </div>
+    <div class="card w-100 border-0 p-3 mb-3">
+        <form [formGroup]="filterForm" class="row align-items-end" (ngSubmit)="filterFiles()">
+            <div class="col-md-3 col-sm-4 col-6 mb-sm-0 mb-2">
+                <label class="form-label f-label">Filter by Date from:</label>
+                <input type="date" class="form-control f-input" formControlName="startDate">
+            </div>
+            <div class="col-md-3 col-sm-4 col-6 mb-sm-0 mb-2">
+                <label class="form-label f-label">Filter by Date to:</label>
+                <input type="date" class="form-control f-input" formControlName="endDate">
+            </div>
+            <div class="col-md-2 col-sm-3 col-4">
+                <button type="submit" [disabled]="filterForm.invalid" class="w-100 filter-btn btn btn-primary">Filter</button>
+            </div>
+        </form>
+    </div>
     <div class="main-table w-100 bg-white flex-grow-1 d-flex flex-column">
         <div class="card border-0 mb-3">
             <div class="card-body">
@@ -14,7 +29,7 @@
                     </div>
                     <div class="col-4 ms-auto">
                         <label class="form-label f-label mb-0">Search</label>
-                        <input class="form-control s-input" type="text" [(ngModel)]="term" placeholder="Enter keyword...">
+                        <input class="form-control f-input" type="text" [(ngModel)]="term" placeholder="Enter keyword...">
                     </div>
                 </div>
             </div>
@@ -37,7 +52,7 @@
                     <div *ngIf="isLoading" class="spinner-size position-absolute start-50 translate-middle">
                         <img src="../../../assets/gear-solid.svg" alt="spinner">
                     </div>
-                    <p class="position-absolute start-50 translate-middle-x mt-2" *ngIf="files?.length === 0">There are no files to display</p>
+                    <p class="position-absolute start-50 translate-middle-x mt-2" *ngIf="!isLoading && files?.length === 0">There are no files to display</p>
                     <tr *ngFor="let item of files | filter: term | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage} | orderBy: key: reverse  let i = index">
                         <!-- <th scope="row">{{(currentPage-1)*itemsPerPage + i + 1}}</th> -->
                         <th scope="row">{{item.itemIndex + 1}}</th>

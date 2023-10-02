@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Globals } from 'src/app/_Classes/Globals';
 import { UploadModalComponent } from 'src/app/modals/upload-modal/upload-modal.component';
@@ -28,6 +29,10 @@ export class FeedbackUploadComponent implements OnInit {
     { id: 4, label: '25', pageItems: 25 },
     { id: 5, label: '30', pageItems: 30 },
   ];
+  filterForm = new FormGroup({
+    startDate: new FormControl('', [Validators.required]),
+    endDate: new FormControl('', [Validators.required]),
+  });
 
   constructor(
     private modalService: BsModalService,
@@ -40,7 +45,6 @@ export class FeedbackUploadComponent implements OnInit {
     this.getUserRole();
     this.getFiles();
     console.log(this.key);
-    
   }
 
   getUserRole() {
@@ -70,7 +74,11 @@ export class FeedbackUploadComponent implements OnInit {
             item.itemIndex = index;
           });
           this.files = res;
-          this.entriesOptions.push({ id: 6, label: 'All', pageItems: this.files?.length });
+          this.entriesOptions.push({
+            id: 6,
+            label: 'All',
+            pageItems: this.files?.length,
+          });
         },
       });
     } else {
@@ -81,7 +89,11 @@ export class FeedbackUploadComponent implements OnInit {
             item.itemIndex = index;
           });
           this.files = res;
-          this.entriesOptions.push({ id: 6, label: 'All', pageItems: this.files?.length })
+          this.entriesOptions.push({
+            id: 6,
+            label: 'All',
+            pageItems: this.files?.length,
+          });
         },
       });
     }
@@ -122,5 +134,34 @@ export class FeedbackUploadComponent implements OnInit {
       this.reverse = !this.reverse;
     }
     this.key = key;
+  }
+
+  filterFiles() {
+    this.isLoading = true;
+    this.files = [];
+    this.fileService.getFilesByDate(this.filterForm.value).subscribe({
+      next: (res) => {
+        res.forEach((item: any, index: any) => {
+          item.itemIndex = index;
+        });
+        this.files = res;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.log(err);
+        this.isLoading = false;
+      }
+    })
+  }
+
+  isInvalid(data:any) {
+    const allInvalid = !data.value.startDate && !data.value.endDate;
+    if (allInvalid) {
+      return true;
+    }
+    if (!data.value.startDate && data.value.endDate) {
+      return true;
+    }
+    return false;
   }
 }

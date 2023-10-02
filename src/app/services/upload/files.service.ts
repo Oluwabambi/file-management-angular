@@ -19,6 +19,10 @@ export class FilesService {
     return this.api.get('files-uploaded-by-user');
   }
 
+  getFilesByDate(data: any) {
+    return this.api.post('files-within-date-range', data);
+  }
+
   downloadFile(id: any) {
     return this.api.downloadFile(`download-file/${id}`);
   }

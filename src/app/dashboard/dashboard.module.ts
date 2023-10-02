@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderModule } from 'ngx-order-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -28,7 +28,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     OrderModule,
     Ng2SearchPipeModule,
-    NgSelectModule
+    NgSelectModule,
+    ReactiveFormsModule,
     // TooltipModule
   ],
 })
