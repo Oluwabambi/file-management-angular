@@ -3,7 +3,19 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="bsModalRef.hide()"></button>
 </div>
 <div class="modal-body">
+   
     <form class="row" (ngSubmit)="fileUpload()">
+        <div class="mb-3 col-12">
+            <label class="form-label">Payment Gateway</label>
+            <ng-select [formControl]="paymentGateway">
+                <ng-option *ngFor="let type of paymentGatewayTypes" [value]="type.name">{{type.name}}</ng-option>
+            </ng-select>
+            <div *ngIf="paymentGateway?.invalid && (paymentGateway?.dirty || paymentGateway?.touched)" class="text-danger-sm">
+                <div *ngIf="paymentGateway?.errors?.['required']">
+                    Payment Gateway is required.
+                </div>
+            </div>
+        </div>
         <div class="mb-3 col-12">
             <ngx-dropzone accept="text/csv" class="dropz" [multiple]="false" (change)="onSelect($event)">
                 <ngx-dropzone-label>Drop your files here or <span class="fw-bold">Browse</span></ngx-dropzone-label>

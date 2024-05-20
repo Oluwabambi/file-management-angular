@@ -15,10 +15,15 @@ export class UploadModalComponent implements OnInit {
   submitted: boolean = false;
   files: File[] = [];
   rejectedFile: boolean = false;
+  paymentGatewayTypes: any[] = [
+    {id: 1, name: 'NAPS'}, 
+    {id: 2, name: 'NEFT'}
+];
 
   uploadData = new FormData();
   addedFile: any;
 
+  paymentGateway = new FormControl('', [Validators.required]);
   description = new FormControl('', [Validators.required]);
 
   @Output() fileUploaded = new EventEmitter<any>();
@@ -55,33 +60,33 @@ export class UploadModalComponent implements OnInit {
     this.isLoading = true;
     this.submitted = true;
     const descValue: any = this.description.value;
+    const gatewayValue: any = this.paymentGateway.value;
     this.uploadData.append('description', descValue);
-
-    this.fileService.uploadFile(this.uploadData).subscribe({
-      next: (res) => {
-        this.toast.success('File uploaded successfully');
-        this.isLoading = false;
-        this.bsModalRef.hide();
-        this.fileUploaded.emit();
-        this.submitted = false;
-
-      },
-      error: (err) => {
-        // this.toast.success('File uploaded successfully');  // show success message for now
-        if (err.status !== 200) {
-          this.toast.success('File uploaded successfully');
-          this.isLoading = false;
-          this.submitted = false;
-          this.bsModalRef.hide();
-          this.fileUploaded.emit();
-          return;
-        }
-        this.toast.error(err.error.text);
-        this.isLoading = false;
-        console.log(err);
-        this.submitted = false;
-      },
-    });
+    this.uploadData.append('payment_gateway', gatewayValue);
+    // this.fileService.uploadFile(this.uploadData).subscribe({
+    //   next: (res) => {
+    //     this.toast.success('File uploaded successfully');
+    //     this.isLoading = false;
+    //     this.bsModalRef.hide();
+    //     this.fileUploaded.emit();
+    //     this.submitted = false;
+    //   },
+    //   error: (err) => {
+    //     // this.toast.success('File uploaded successfully');  // show success message for now
+    //     if (err.status !== 200) {
+    //       this.toast.success('File uploaded successfully');
+    //       this.isLoading = false;
+    //       this.submitted = false;
+    //       this.bsModalRef.hide();
+    //       this.fileUploaded.emit();
+    //       return;
+    //     }
+    //     this.toast.error(err.error.text);
+    //     this.isLoading = false;
+    //     console.log(err);
+    //     this.submitted = false;
+    //   },
+    // });
   }
 
   onRemove(event: any) {
@@ -90,7 +95,7 @@ export class UploadModalComponent implements OnInit {
   }
 
   isDisabled(): boolean {
-    if (this.files.length === 0 || this.description.value === '') {
+    if (this.files.length === 0 || this.description.value === '' || this.paymentGateway.value === '') {
       return true;
     }
     return false;

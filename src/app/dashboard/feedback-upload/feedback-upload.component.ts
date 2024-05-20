@@ -44,7 +44,7 @@ export class FeedbackUploadComponent implements OnInit {
   ngOnInit(): void {
     this.getUserRole();
     this.getFiles();
-    console.log(this.key);
+    // console.log(this.key);
   }
 
   getUserRole() {
